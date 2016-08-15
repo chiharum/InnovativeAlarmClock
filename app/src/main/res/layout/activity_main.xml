@@ -26,7 +26,20 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/menuImage" />
+                    android:id="@+id/settingImage"
+                    android:onClick="setting" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/alramSettingImage"
+                    android:onClick="alarmSetting" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editScheduleImage"
+                    android:onClick="editSchedule" />
             </LinearLayout>
 
             <LinearLayout
@@ -68,7 +81,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1.5">
 
                 <AnalogClock
                     android:layout_width="wrap_content"
