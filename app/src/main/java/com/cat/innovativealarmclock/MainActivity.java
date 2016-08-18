@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +16,10 @@ public class MainActivity extends AppCompatActivity {
     NewsListCustomAdapter customAdapter;
 
     ListView newsList;
+
+    NewsListData newsListData;
+
+    int todayDate;
 
     MySQLiteOpenHelper mySQLiteOpenHelper;
     SQLiteDatabase database;
@@ -29,15 +34,40 @@ public class MainActivity extends AppCompatActivity {
 
         newsList = (ListView)findViewById(R.id.newsList);
         items = new ArrayList<>();
+
+        newsListData = new NewsListData();
+
+        Calendar calendar = Calendar.getInstance();
+        todayDate = calendar.get(Calendar.DATE) + calendar.get(Calendar.MONTH) * 100 + calendar.get(Calendar.YEAR) * 10000;
     }
 
     public void setNewsList(){
 
+        items.clear();
+
+        int amount = newsListData.number;
+
+        searchDatabase(todayDate);
+
+        for(int i = 0; i < amount; i++){
+
+            String scheduleTitle = newsListData.schedule.get(i);
+            int date = newsListData.date.get(i);
+
+            ScheduleItem item;
+            item = new ScheduleItem(scheduleTitle, date);
+            items.add(item);
+        }
+
+        //いよいよCustomAdaptorです！
     }
 
     public void searchDatabase(int dateNumber){
 
         Cursor cursor = null;
+
+        String scheduleTitle = null;
+        int date = 0;
 
         try{
             cursor = database.query(MySQLiteOpenHelper.ScheduleTable, new String[]{"schedule_title", "date"}, "date = ?", new String[]{String.valueOf(dateNumber)}, null, null, null);
@@ -46,13 +76,15 @@ public class MainActivity extends AppCompatActivity {
             int indexDate = cursor.getColumnIndex("date");
 
             while(cursor.moveToNext()){
-                String scheduleTitle = cursor.getString(indexScheduleTitle);
-                int date = cursor.getInt(indexDate);
+                scheduleTitle = cursor.getString(indexScheduleTitle);
+                date = cursor.getInt(indexDate);
             }
         } finally {
             if(cursor != null){
                 cursor.close();
             }
         }
+
+        newsListData.NewsListData(scheduleTitle, date);
     }
 }
