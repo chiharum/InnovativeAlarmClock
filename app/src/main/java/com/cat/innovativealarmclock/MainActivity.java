@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         todayDate = calendar.get(Calendar.DATE) + calendar.get(Calendar.MONTH) * 100 + calendar.get(Calendar.YEAR) * 10000;
+
+        setNewsList();
     }
 
     public void setNewsList(){
@@ -47,19 +49,26 @@ public class MainActivity extends AppCompatActivity {
 
         int amount = newsListData.number;
 
-        searchDatabase(todayDate);
-
-        for(int i = 0; i < amount; i++){
-
-            String scheduleTitle = newsListData.schedule.get(i);
-            int date = newsListData.date.get(i);
-
-            ScheduleItem item;
-            item = new ScheduleItem(scheduleTitle, date);
+        if(amount == 0){
+            ScheduleItem item = new ScheduleItem("今日の予定はありません。", todayDate);
             items.add(item);
+        }else{
+
+            searchDatabase(todayDate);
+
+            for(int i = 0; i < amount; i++){
+
+                String scheduleTitle = newsListData.schedule.get(i);
+                int date = newsListData.date.get(i);
+
+                ScheduleItem item;
+                item = new ScheduleItem(scheduleTitle, date);
+                items.add(item);
+            }
         }
 
-        //いよいよCustomAdaptorです！
+        customAdapter = new NewsListCustomAdapter(this, R.layout.news_list_layout, items);
+        newsList.setAdapter(customAdapter);
     }
 
     public void searchDatabase(int dateNumber){
