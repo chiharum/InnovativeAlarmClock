@@ -17,19 +17,38 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/chooseDateButton"
-            android:layout_weight="3" />
+            android:text="&lt;"
+            android:id="@+id/decreaseDate"
+            android:layout_weight="1"
+            android:onClick="decrease" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/addButton"
-            android:layout_weight="1" />
+            android:id="@+id/chooseDateButton"
+            android:layout_weight="3"
+            android:onClick="chooseDate" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=">"
+            android:id="@+id/increaseDate"
+            android:layout_weight="1"
+            android:onClick="increase" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/addScheduleButton"
+            android:layout_weight="1"
+            android:onClick="addSchedule"
+            android:src="@drawable/addButton" />
 
     </LinearLayout>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/scheduleEdittingListView" />
+        android:id="@+id/scheduleEditingListView" />
 </LinearLayout>

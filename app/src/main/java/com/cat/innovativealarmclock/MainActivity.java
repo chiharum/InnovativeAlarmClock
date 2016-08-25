@@ -1,11 +1,12 @@
 package com.cat.innovativealarmclock;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -47,15 +48,14 @@ public class MainActivity extends AppCompatActivity {
 
         items.clear();
 
+        searchDatabase(todayDate);
+
         int amount = newsListData.number;
 
         if(amount == 0){
-            ScheduleItem item = new ScheduleItem("今日の予定はありません。", todayDate);
+            ScheduleItem item = new ScheduleItem(getString(R.string.noSchedule), todayDate);
             items.add(item);
         }else{
-
-            searchDatabase(todayDate);
-
             for(int i = 0; i < amount; i++){
 
                 String scheduleTitle = newsListData.schedule.get(i);
@@ -95,5 +95,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         newsListData.NewsListData(scheduleTitle, date);
+    }
+
+    public void edit(View view){
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, ScheduleActivity.class);
+        intent.putExtra("todayDate", todayDate);
+        startActivity(intent);
     }
 }

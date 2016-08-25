@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import org.w3c.dom.Text;
 import java.util.List;
 
-public class NewsListCustomAdapter extends ArrayAdapter<ScheduleItem> {
+public class ScheduleEditingListCustomAdapter extends ArrayAdapter<ScheduleItem> {
 
     LayoutInflater layoutInflater;
 
-    public NewsListCustomAdapter (Context context, int resource, List<ScheduleItem> items){
+    public ScheduleEditingListCustomAdapter (Context context, int resource, List<ScheduleItem> items){
         super(context, resource, items);
         layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -23,7 +22,7 @@ public class NewsListCustomAdapter extends ArrayAdapter<ScheduleItem> {
         final ViewHolder viewHolder;
 
         if(convertView == null){
-            convertView = layoutInflater.inflate(R.layout.news_list_layout, null);
+            convertView = layoutInflater.inflate(R.layout.schedule_editor_layout, null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         }else{
@@ -33,20 +32,17 @@ public class NewsListCustomAdapter extends ArrayAdapter<ScheduleItem> {
         ScheduleItem item = getItem(position);
 
         if(item != null){
-            viewHolder.newsTitle.setText(item.scheduleItem);
-            viewHolder.dateText.setText(String.valueOf(item.date));
+            viewHolder.scheduleTitleText.setText(item.scheduleItem);
         }
 
         return convertView;
     }
 
     private class ViewHolder{
-        TextView newsTitle;
-        TextView dateText;
+        TextView scheduleTitleText;
 
         public ViewHolder(View view){
-            newsTitle = (TextView)view.findViewById(R.id.scheduleTitleText);
-            dateText = (TextView)view.findViewById(R.id.dateText);
+            scheduleTitleText = (TextView)view.findViewById(R.id.scheduleTitleText);
         }
     }
 }
