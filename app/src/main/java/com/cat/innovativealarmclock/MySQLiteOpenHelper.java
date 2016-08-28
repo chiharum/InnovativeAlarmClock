@@ -15,7 +15,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase database){
-        database.execSQL("create table" + ScheduleTable + " (id integer primary key autoincrement not null, schedule_title string not null, date integer not null, schedule_id integer not null, tag string not null, tag_id integer not null");
+        database.execSQL("create table " + ScheduleTable + " (id integer primary key autoincrement not null, schedule_title string not null, date integer not null)");
     }
 
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion){

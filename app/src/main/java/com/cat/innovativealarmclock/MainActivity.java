@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         newsListData = new NewsListData();
 
         Calendar calendar = Calendar.getInstance();
-        todayDate = calendar.get(Calendar.DATE) + calendar.get(Calendar.MONTH) * 100 + calendar.get(Calendar.YEAR) * 10000;
+        todayDate = calendar.get(Calendar.DATE) + (calendar.get(Calendar.MONTH) + 1) * 100 + calendar.get(Calendar.YEAR) * 10000;
 
         setNewsList();
     }
@@ -94,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        newsListData.NewsListData(scheduleTitle, date);
+        if(scheduleTitle != null){
+            newsListData.NewsListData(scheduleTitle, date);
+        }
     }
 
     public void edit(View view){

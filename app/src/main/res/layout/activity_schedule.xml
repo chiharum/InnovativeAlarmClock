@@ -43,7 +43,7 @@
             android:id="@+id/addScheduleButton"
             android:layout_weight="1"
             android:onClick="addSchedule"
-            android:src="@drawable/addButton" />
+            android:src="@drawable/addbutton" />
 
     </LinearLayout>
 

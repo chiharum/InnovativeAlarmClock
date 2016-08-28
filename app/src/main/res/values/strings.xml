@@ -2,4 +2,6 @@
     <string name="app_name">InnovativeAlarmClock</string>
     <string name="noSchedule">今日の予定はありません。</string>
     <string name="edit">予定を編集</string>
+    <string name="add">追加</string>
+    <string name="erase">削除</string>
 </resources>
