@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         searchDatabase(todayDate);
 
-        int amount = newsListData.number;
+        int amount = newsListData.amount;
 
         if(amount == 0){
             ScheduleItem item = new ScheduleItem(getString(R.string.noSchedule), todayDate);
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(scheduleTitle != null){
-            newsListData.NewsListData(scheduleTitle, date);
+            newsListData.setNewsListData(scheduleTitle, date);
         }
     }
 

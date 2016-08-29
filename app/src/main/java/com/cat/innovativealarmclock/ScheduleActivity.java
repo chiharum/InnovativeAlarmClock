@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -61,7 +62,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
         search(screenDate, true);
 
-        int amount = newsListData.number;
+        int amount = newsListData.amount;
 
         if(amount == 0){
             ScheduleItem item = new ScheduleItem(getString(R.string.noSchedule), screenDate);
@@ -112,7 +113,7 @@ public class ScheduleActivity extends AppCompatActivity {
         }
 
         if(scheduleTitle != null){
-            newsListData.NewsListData(scheduleTitle, date);
+            newsListData.setNewsListData(scheduleTitle, date);
         }
     }
 
@@ -146,8 +147,12 @@ public class ScheduleActivity extends AppCompatActivity {
 
         final EditText scheduleEditText = (EditText)layout.findViewById(R.id.scheduleEditText);
         search(position, false);
-        firstText = newsListData.schedule.get(0);
-        scheduleEditText.setText(firstText);
+        if(newsListData.schedule != null){
+            firstText = newsListData.schedule.get(0);
+            scheduleEditText.setText(firstText);
+        }else{
+            firstText = null;
+        }
 
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 
@@ -181,6 +186,9 @@ public class ScheduleActivity extends AppCompatActivity {
 
         layout.findViewById(R.id.addButton).setOnClickListener(listener);
         layout.findViewById(R.id.eraseButton).setOnClickListener(listener);
+
+        alertDialog.setView(layout);
+        alertDialog.show();
     }
 
     public void addSchedule(View view){
