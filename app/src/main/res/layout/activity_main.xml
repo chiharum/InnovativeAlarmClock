@@ -13,6 +13,30 @@
         android:layout_weight="1">
 
         <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5">
+
+                <AnalogClock
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/analogClock"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -21,25 +45,32 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="left">
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:id="@+id/settingImage"
-                    android:onClick="setting" />
+                    android:onClick="setting"
+                    android:src="@drawable/setting"
+                    android:layout_weight="1" />
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:id="@+id/alramSettingImage"
-                    android:onClick="alarmSetting" />
+                    android:onClick="alarmSetting"
+                    android:src="@drawable/alarm"
+                    android:layout_weight="1" />
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:id="@+id/editScheduleImage"
-                    android:onClick="editSchedule" />
+                    android:onClick="editSchedule"
+                    android:src="@drawable/edit"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -67,30 +98,6 @@
                     android:id="@+id/humidityText" />
             </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.5">
-
-                <AnalogClock
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/analogClock"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true" />
-            </RelativeLayout>
-        </LinearLayout>
     </FrameLayout>
 
     <ListView
@@ -98,12 +105,5 @@
         android:layout_height="0dp"
         android:id="@+id/newsList"
         android:layout_weight="1" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/edit"
-        android:id="@+id/button"
-        android:onClick="edit" />
 
 </LinearLayout>

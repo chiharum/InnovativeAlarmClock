@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import java.util.ArrayList;
@@ -75,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor cursor = null;
 
-        String scheduleTitle = null;
-        int date = 0;
+        String scheduleTitle;
+        int date;
 
         try{
             cursor = database.query(MySQLiteOpenHelper.ScheduleTable, new String[]{"schedule_title", "date"}, "date = ?", new String[]{String.valueOf(dateNumber)}, null, null, null);
@@ -87,19 +88,26 @@ public class MainActivity extends AppCompatActivity {
             while(cursor.moveToNext()){
                 scheduleTitle = cursor.getString(indexScheduleTitle);
                 date = cursor.getInt(indexDate);
+                newsListData.setNewsListData(scheduleTitle, date);
             }
         } finally {
             if(cursor != null){
                 cursor.close();
             }
         }
-
-        if(scheduleTitle != null){
-            newsListData.setNewsListData(scheduleTitle, date);
-        }
     }
 
-    public void edit(View view){
+    public void setting(View view){
+        Log.i(getString(R.string.eventLog_button), "setting");
+    }
+
+    public void alarmSetting(View view){
+        Log.i(getString(R.string.eventLog_button), "alarm");
+    }
+
+    public void editSchedule(View view){
+        Log.i(getString(R.string.eventLog_button), "schedule");
+
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, ScheduleActivity.class);
         intent.putExtra("todayDate", todayDate);

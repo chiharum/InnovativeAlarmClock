@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">InnovativeAlarmClock</string>
     <string name="noSchedule">今日の予定はありません。</string>
+    <string name="saved">保存しました。</string>
     <string name="edit">予定を編集</string>
     <string name="add">追加</string>
     <string name="erase">削除</string>
+    <string name="eventLog_button">ButtonPushedEvent</string>
+    <string name="eventLog_activityAndClass">classExecutedEvent</string>
 </resources>
