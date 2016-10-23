@@ -16,14 +16,14 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/eraseButton"
+            android:id="@+id/addButton"
             android:layout_weight="1"
             android:text="@string/add" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/addButton"
+            android:id="@+id/eraseButton"
             android:layout_weight="1"
             android:text="@string/erase" />
     </LinearLayout>

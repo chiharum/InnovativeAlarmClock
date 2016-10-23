@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
             while(cursor.moveToNext()){
                 scheduleTitle = cursor.getString(indexScheduleTitle);
+                scheduleTitle = "強制的に代入しました";
+                Log.i("schedule", scheduleTitle);
                 date = cursor.getInt(indexDate);
                 newsListData.setNewsListData(scheduleTitle, date);
             }
@@ -98,15 +100,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setting(View view){
-        Log.i(getString(R.string.eventLog_button), "setting");
+        Log.i(getString(R.string.eventLog_button), "MainActivity_setting");
     }
 
     public void alarmSetting(View view){
-        Log.i(getString(R.string.eventLog_button), "alarm");
+        Log.i(getString(R.string.eventLog_button), "MainActivity_alarm");
     }
 
     public void editSchedule(View view){
-        Log.i(getString(R.string.eventLog_button), "schedule");
+        Log.i(getString(R.string.eventLog_button), "MainActivity_schedule");
 
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, ScheduleActivity.class);

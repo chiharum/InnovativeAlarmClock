@@ -57,10 +57,10 @@ public class ScheduleActivity extends AppCompatActivity {
 
         items = new ArrayList<>();
         newsListData = new NewsListData();
-        setNewsList();
+        setScheduleList();
     }
 
-    public void setNewsList(){
+    public void setScheduleList(){
 
         Log.i(getString(R.string.eventLog_activityAndClass), "ScheduleActivity_setNewsList");
 
@@ -69,6 +69,8 @@ public class ScheduleActivity extends AppCompatActivity {
         search(screenDate);
 
         int amount = newsListData.amount;
+
+        Log.i("int_amount", String.valueOf(amount));
 
         if(amount == 0){
             ScheduleItem item = new ScheduleItem(getString(R.string.noSchedule), screenDate);
@@ -95,7 +97,7 @@ public class ScheduleActivity extends AppCompatActivity {
         });
     }
 
-    public void search(int resourceInteger){
+    public void search(int resourceDate){
 
         Log.i(getString(R.string.eventLog_activityAndClass), "ScheduleActivity_search");
 
@@ -105,12 +107,13 @@ public class ScheduleActivity extends AppCompatActivity {
         int date;
 
         try{
-            cursor = database.query(MySQLiteOpenHelper.ScheduleTable, new String[]{"schedule_title", "date"}, "date = ?", new String[]{String.valueOf(resourceInteger)}, null, null, null);
+            cursor = database.query(MySQLiteOpenHelper.ScheduleTable, new String[]{"schedule_title", "date"}, "date = ?", new String[]{String.valueOf(resourceDate)}, null, null, null);
 
             int indexScheduleTitle = cursor.getColumnIndex("schedule_title");
             int indexDate = cursor.getColumnIndex("date");
 
             while(cursor.moveToNext()){
+                newsListData.amount++;
                 scheduleTitle = cursor.getString(indexScheduleTitle);
                 date = cursor.getInt(indexDate);
                 newsListData.setNewsListData(scheduleTitle, date);
@@ -123,7 +126,9 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     public void save(String title){
-        Log.i(getString(R.string.eventLog_activityAndClass), "save");
+        Log.i(getString(R.string.eventLog_activityAndClass), "ScheduleActivity_save");
+
+        Log.i("title", title);
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("date", screenDate);
@@ -132,7 +137,7 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     public void update(String title){
-        Log.i(getString(R.string.eventLog_activityAndClass), "update");
+        Log.i(getString(R.string.eventLog_activityAndClass), "ScheduleActivity_update");
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("date", screenDate);
@@ -141,7 +146,7 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     public void erase(String title){
-        Log.i(getString(R.string.eventLog_activityAndClass), "erase");
+        Log.i(getString(R.string.eventLog_activityAndClass), "ScheduleActivity_erase");
 
         database.delete(MySQLiteOpenHelper.ScheduleTable, "date = " + screenDate + " and schedule_title = " + title, null);
     }
@@ -177,17 +182,18 @@ public class ScheduleActivity extends AppCompatActivity {
                     SpannableStringBuilder spannableStringBuilder = (SpannableStringBuilder)scheduleEditText.getText();
                     if(spannableStringBuilder == null){
                         text = null;
+                        Log.i("Text is ", "null");
                     }else{
                         text = spannableStringBuilder.toString();
                     }
 
                     if(isNew){
-                        update(text);
-                    }else{
                         save(text);
+                    }else{
+                        update(text);
                     }
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.saved), Toast.LENGTH_SHORT).show();
-                    setNewsList();
+                    setScheduleList();
                     alertDialog.dismiss();
                 }else{
                     erase(firstText);
@@ -217,7 +223,7 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 screenDate = day + month * 100 + year * 10000;
-                setNewsList();
+                setScheduleList();
             }
         }, year, month, day);
         datePickerDialog.getDatePicker().setSpinnersShown(false);
@@ -227,9 +233,13 @@ public class ScheduleActivity extends AppCompatActivity {
 
     public void increase(View view){
 
+        Log.i(getString(R.string.eventLog_button), "ScheduleActivity_increase");
+
     }
 
     public void decrease(View view){
+
+        Log.i(getString(R.string.eventLog_button), "ScheduleActivity_decrease");
 
     }
 }

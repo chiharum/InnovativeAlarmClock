@@ -8,6 +8,8 @@ public class NewsListData {
     ArrayList<Integer> date;
     int amount = 0;
 
+    // ArrayListの初期化
+
     public void setNewsListData(String schedule, int date){
 
         this.schedule.add(schedule);
