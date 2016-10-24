@@ -5,10 +5,9 @@
     android:gravity="center_vertical">
 
     <TextView
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/scheduleTitleText"
-        android:layout_weight="5" />
+        android:id="@+id/scheduleTitleText" />
 
 </LinearLayout>

@@ -70,8 +70,6 @@ public class ScheduleActivity extends AppCompatActivity {
 
         int amount = newsListData.amount;
 
-        Log.i("int_amount", String.valueOf(amount));
-
         if(amount == 0){
             ScheduleItem item = new ScheduleItem(getString(R.string.noSchedule), screenDate);
             items.add(item);
@@ -86,6 +84,8 @@ public class ScheduleActivity extends AppCompatActivity {
                 items.add(item);
             }
         }
+
+        newsListData.clearData();
 
         customAdapter = new ScheduleEditingListCustomAdapter(this, R.layout.schedule_editor_layout, items);
         scheduleList.setAdapter(customAdapter);
@@ -113,7 +113,6 @@ public class ScheduleActivity extends AppCompatActivity {
             int indexDate = cursor.getColumnIndex("date");
 
             while(cursor.moveToNext()){
-                newsListData.amount++;
                 scheduleTitle = cursor.getString(indexScheduleTitle);
                 date = cursor.getInt(indexDate);
                 newsListData.setNewsListData(scheduleTitle, date);
@@ -159,16 +158,19 @@ public class ScheduleActivity extends AppCompatActivity {
 
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
         final View layout = layoutInflater.inflate(R.layout.edit_schedule_layout, null);
-
         final EditText scheduleEditText = (EditText)layout.findViewById(R.id.scheduleEditText);
-        search(position);
+        final Button addButton = (Button)layout.findViewById(R.id.addButton);
+
+        search(screenDate);
         if(newsListData.schedule != null){
-            firstText = newsListData.schedule.get(0);
+            firstText = newsListData.schedule.get(position);
             scheduleEditText.setText(firstText);
         }else{
             firstText = null;
         }
-
+        if (!isNew){
+            addButton.setText(getString(R.string.save));
+        }
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 
         View.OnClickListener listener = new View.OnClickListener(){
@@ -182,7 +184,6 @@ public class ScheduleActivity extends AppCompatActivity {
                     SpannableStringBuilder spannableStringBuilder = (SpannableStringBuilder)scheduleEditText.getText();
                     if(spannableStringBuilder == null){
                         text = null;
-                        Log.i("Text is ", "null");
                     }else{
                         text = spannableStringBuilder.toString();
                     }

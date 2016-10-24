@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        newsListData.clearData();
+
         customAdapter = new NewsListCustomAdapter(this, R.layout.news_list_layout, items);
         newsList.setAdapter(customAdapter);
     }
@@ -87,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
             while(cursor.moveToNext()){
                 scheduleTitle = cursor.getString(indexScheduleTitle);
-                scheduleTitle = "強制的に代入しました";
-                Log.i("schedule", scheduleTitle);
                 date = cursor.getInt(indexDate);
                 newsListData.setNewsListData(scheduleTitle, date);
             }
