@@ -19,11 +19,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ScheduleActivity extends AppCompatActivity {
 
-    int screenDate;
+    int todayDate, screenDate, screenYear, screenMonth, screenDateOfMonth;
+    String dateText;
 
     Button chooseDateButton;
     ListView scheduleList;
@@ -49,15 +51,25 @@ public class ScheduleActivity extends AppCompatActivity {
         chooseDateButton = (Button)findViewById(R.id.chooseDateButton);
         scheduleList = (ListView)findViewById(R.id.scheduleEditingListView);
 
-        screenDate = getIntent().getIntExtra("todayDate", 0);
-
-        String dateText;
-        dateText = screenDate / 10000 + "年" + (screenDate / 100 - screenDate / 10000 * 100) + "月" + screenDate % 100 + "日";
-        chooseDateButton.setText(dateText);
+        todayDate = getIntent().getIntExtra("todayDate", 0);
+        setDate(todayDate, 0, 0, 0);
 
         items = new ArrayList<>();
         newsListData = new NewsListData();
         setScheduleList();
+    }
+
+    public void setDate(int sourceDate, int yearAdd, int monthAdd, int setDate){
+        screenDate = sourceDate;
+        screenYear = sourceDate / 10000 + yearAdd;
+        screenMonth = sourceDate / 100 - sourceDate / 10000 * 100 + monthAdd;
+        if(setDate == 0){
+            screenDateOfMonth = 1;
+        }else{
+            screenDateOfMonth = sourceDate % 100;
+        }
+        dateText = screenYear + "年" + screenMonth + "月" + screenDateOfMonth + "日";
+        chooseDateButton.setText(dateText);
     }
 
     public void setScheduleList(){
@@ -92,7 +104,7 @@ public class ScheduleActivity extends AppCompatActivity {
         scheduleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                dateEditingDialog(position, false);
+                scheduleEditingDialog(position, false);
             }
         });
     }
@@ -150,7 +162,7 @@ public class ScheduleActivity extends AppCompatActivity {
         database.delete(MySQLiteOpenHelper.ScheduleTable, "date = " + screenDate + " and schedule_title = " + title, null);
     }
 
-    public void dateEditingDialog(int position, final boolean isNew){
+    public void scheduleEditingDialog(int position, final boolean isNew){
 
         Log.i(getString(R.string.eventLog_activityAndClass), "ScheduleActivity_dateEditingDialog");
 
@@ -209,9 +221,9 @@ public class ScheduleActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void addSchedule(View view){
+    public void addSchedule(View view) {
         Log.i(getString(R.string.eventLog_activityAndClass), "ScheduleActivity_addSchedule");
-        dateEditingDialog(0, true);
+        scheduleEditingDialog(0, true);
     }
 
     public void chooseDate(View view){
@@ -223,7 +235,7 @@ public class ScheduleActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                screenDate = day + month * 100 + year * 10000;
+                setDate(day + month * 100 + year * 10000, 0, 0, 0);
                 setScheduleList();
             }
         }, year, month, day);
@@ -236,11 +248,28 @@ public class ScheduleActivity extends AppCompatActivity {
 
         Log.i(getString(R.string.eventLog_button), "ScheduleActivity_increase");
 
+        setDate(screenDate++, 0, 0, 0);
+        Calendar calendarScreenDate = Calendar.getInstance();
+        calendarScreenDate.set(screenYear, screenMonth, screenDateOfMonth);
+        int daysInAMonth = calendarScreenDate.getActualMaximum(Calendar.DATE);
+        if(screenDate % 100 > daysInAMonth){
+            setDate(screenDate, 0, 1, 1);
+            if(screenMonth == 13){
+                setDate(screenDate, 1, -11, 1);
+            }
+        }
     }
 
     public void decrease(View view){
 
         Log.i(getString(R.string.eventLog_button), "ScheduleActivity_decrease");
 
+        setDate(screenDate--, 0, 0, 0);
+        if(screenDateOfMonth == 0){
+            setDate(screenDate, 0, -1, 1);
+            if(screenMonth == 0){
+                setDate(screenDate, -1, 11, 31);
+            }
+        }
     }
 }
